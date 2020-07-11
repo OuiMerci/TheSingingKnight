@@ -20,6 +20,8 @@ public class SongGameplay : MonoBehaviour
 
     public SongRing[] SongPrefabs;
     public DanceRing DanceRing;
+    public float DamagePerTick;
+    public double TickLength;
     public float MaxStamina;
     public float StaminaConsumption;
     public float StaminaRegen;
@@ -122,10 +124,11 @@ public class SongGameplay : MonoBehaviour
         {
             stamina += StaminaRegen * Time.deltaTime * boost;
 
-            if (stamina > MaxStamina) stamina = MaxStamina;
-        }
+            if (stamina > MaxStamina)
+                stamina = MaxStamina;
 
-        GameManager.Instance.Player.UI.SetStaminaRatio(stamina / MaxStamina);
+            GameManager.Instance.Player.UI.SetStaminaRatio(stamina / MaxStamina);
+        }
     }
 }
 

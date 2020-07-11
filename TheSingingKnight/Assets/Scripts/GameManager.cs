@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum GameState { Menu, Playing, GameOver}
 
@@ -10,6 +11,9 @@ public class GameManager : MonoBehaviour
     public GameState State;
     public Player Player; 
     public AudioManager Audio;
+
+    [Header("Read Only")]
+    public List<Listener> Listeners;
 
     static public GameManager Instance
     {
@@ -25,6 +29,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         State = GameState.Playing;
+        Listeners = FindObjectsOfType<Listener>().ToList();
     }
 
     // Update is called once per frame

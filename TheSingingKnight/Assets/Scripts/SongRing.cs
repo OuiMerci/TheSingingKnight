@@ -9,16 +9,18 @@ public class SongRing : MonoBehaviour
     public float GrowSpeed;
     public float maxScale;
 
-    private void Start()
-    {
-        
-    }
-
+    private double lastTick;
     private void Update()
     {
         if(transform.localScale.x < maxScale)
         {
             GrowSize();
+        }
+
+        if (lastTick + GameManager.Instance.Player.SongGameplay.TickLength <= Time.time)
+        {
+            lastTick = Time.time;
+            LookForTargets();
         }
     }
 
@@ -34,6 +36,14 @@ public class SongRing : MonoBehaviour
 
     private void LookForTargets()
     {
+        float radius = Vector3.Distance(DistanceChecker.position, transform.position);
 
+        foreach(Listener l in GameManager.Instance.Listeners)
+        {
+            if(Vector3.Distance(transform.position, l.transform.position) <= radius)
+            {
+                l.TryApplyDamage(this);
+            }
+        }
     }
 }
